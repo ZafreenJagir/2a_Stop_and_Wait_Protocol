@@ -12,37 +12,42 @@ To write a python program to perform stop and wait protocol
 client
 ```
 import socket
-from datetime import datetime
 s=socket.socket()
 s.bind(('localhost',8000))
 s.listen(5)
 c,addr=s.accept()
-print("Client Address : ",addr)
-now = datetime.now()
-c.send(now.strftime("Date: %d/%m/%Y and Time: %H:%M:%S").encode())
-ack=c.recv(1024).decode()
-if ack:
- print(ack)
-c.close()
+while True:
+   i=input("Enter a data: ")
+   c.send(i.encode())
+   ack=c.recv(1024).decode()
+   if ack:
+      print(ack)
+      continue
+   else:
+      c.close()
+      break
+
 ```
 server
 ```
 import socket
 s=socket.socket()
 s.connect(('localhost',8000))
-print(s.getsockname())
-print(s.recv(1024).decode())
-s.send("acknowledgement recived from the server".encode())
+while True:
+    print(s.recv(1024).decode())
+    s.send("Acknowledgement Received".encode())
+
 ```
 ## OUTPUT
 client
 
-![Screenshot 2024-04-15 183624](https://github.com/ZafreenJagir/2a_Stop_and_Wait_Protocol/assets/144870573/2e0471fd-d661-4808-879f-5577502f9bf0)
+
+![Screenshot 2024-04-15 185643](https://github.com/ZafreenJagir/2a_Stop_and_Wait_Protocol/assets/144870573/285f80ef-2e8d-41a6-b734-0fb4f35e819e)
 
 
 server
 
-![Screenshot 2024-04-15 183709](https://github.com/ZafreenJagir/2a_Stop_and_Wait_Protocol/assets/144870573/3003d468-e06a-4e7f-9fb5-248df1ef4a0e)
+![Screenshot 2024-04-15 185720](https://github.com/ZafreenJagir/2a_Stop_and_Wait_Protocol/assets/144870573/ca3a1f95-8af3-4ac3-9768-0609e6ece1a4)
 
 
 
